@@ -1,4 +1,4 @@
-timers
+Timers
 ======
 
-JavaScript based clock widgets
+JavaScript based timer widget

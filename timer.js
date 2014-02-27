@@ -25,6 +25,7 @@ Timer.prototype.onTimeChange = function(callback){
 Timer.prototype.start = function(){
     var _self = this;
     console.log("Starting timer -- " + this.timeInSeconds);
+
     this.timerHandler = setInterval(function(){
         console.log("Tick tock " + _self.elapsedTimeSeconds);
         _self.elapsedTimeSeconds += 1;
@@ -49,13 +50,21 @@ Timer.prototype.start = function(){
             }
         }
     }, 1000);
+
+    this.isPaused = false;
+}
+
+Timer.prototype.paused = function(){
+    return this.isPaused;
 }
 
 Timer.prototype.pause = function(){
     clearInterval(this.timerHandler);
+    this.isPaused = true;
 }
 
 Timer.prototype.reset = function(){
+    this.pause();
     this.elapsedTimeSeconds = 0;
 }
 

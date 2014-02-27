@@ -36,10 +36,8 @@ Timer.prototype.start = function(){
         var minOnesDigit = Math.floor(remainingTime / 60 % 10);
         var minTensDigit = Math.floor(remainingTime / 60 / 10);
 
-        _self.attachDiv.innerHTML = minTensDigit + " " + minOnesDigit + " " + tensDigit + " " + onesDigit;
-
         for(callback in _self.timeChangeCallbacks){
-            callback({onesec: onesDigit, tensec: tensDigit, min: minOnesDigit, tenmin: minTensDigit});
+            _self.timeChangeCallbacks[callback]({onesec: onesDigit, tensec: tensDigit, min: minOnesDigit, tenmin: minTensDigit});
         }
 
         if(_self.elapsedTimeSeconds >= _self.timeInSeconds){
@@ -47,7 +45,7 @@ Timer.prototype.start = function(){
             _self.reset();
 
             for(callback in _self.finishCallbacks){
-                callback();
+                _self.finishCallbacks[callback]();
             }
         }
     }, 1000);

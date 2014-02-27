@@ -1,0 +1,18 @@
+<html>
+    <head>
+        <title> Timer Demo </title>
+    </head>
+    <script type="text/javascript" src="timer.js"></script>
+    <body>
+        <div id="clockAttachPoint" />
+        <script>
+            var timer = new Timer(document.getElementById('clockAttachPoint'), 15);
+
+            timer.onFinish(function(){
+                new Audio('ring.wav').play();
+            });
+
+            timer.start();
+        </script>
+    </body>
+</html>

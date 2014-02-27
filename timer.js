@@ -1,6 +1,9 @@
 
 function Timer(attachDiv, minutes){
     this.attachDiv = attachDiv;
+    this.finishCallbacks = [];
+    this.timeChangeCallbacks = [];
+
     this.setMinutes(minutes);
 }
 
@@ -12,11 +15,11 @@ Timer.prototype.setMinutes = function(minutes){
 }
 
 Timer.prototype.onFinish = function(callback){
-    this.finishCallback = callback;
+    this.finishCallbacks.push(callback);
 }
 
 Timer.prototype.onTimeChange = function(callback){
-    this.timeChangeCallback = callback;
+    this.timeChangeCallbacks.push(callback);
 }
 
 Timer.prototype.start = function(){
@@ -34,12 +37,18 @@ Timer.prototype.start = function(){
         var minTensDigit = Math.floor(remainingTime / 60 / 10);
 
         _self.attachDiv.innerHTML = minTensDigit + " " + minOnesDigit + " " + tensDigit + " " + onesDigit;
-        _self.timeChangeCallback({onesec: onesDigit, tensec: tensDigit, min: minOnesDigit, tenmin: minTensDigit});
+
+        for(callback in _self.timeChangeCallbacks){
+            callback({onesec: onesDigit, tensec: tensDigit, min: minOnesDigit, tenmin: minTensDigit});
+        }
 
         if(_self.elapsedTimeSeconds >= _self.timeInSeconds){
             _self.pause();
             _self.reset();
-            _self.finishCallback();
+
+            for(callback in _self.finishCallbacks){
+                callback();
+            }
         }
     }, 1000);
 }

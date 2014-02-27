@@ -1,4 +1,4 @@
-clocks
+timers
 ======
 
 JavaScript based clock widgets
